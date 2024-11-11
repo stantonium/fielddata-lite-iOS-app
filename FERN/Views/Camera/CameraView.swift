@@ -150,6 +150,15 @@ struct CameraView: View {
         }
     }
     
+    // Invalid Syntax Alert
+    var picSaveErrorView: some View {
+        VStack {
+            Spacer()
+            Text("Image Save Error").bold().foregroundStyle(.red)
+            Text("The image failed to save to the trip's folder!")
+        }
+    }
+    
     // reconnectArrowButton
     var reconnectArrowButton: some View {
         VStack{
@@ -529,7 +538,7 @@ struct CameraView: View {
                 }
                 Spacer()
             }
-            // No-NMEA alert
+            // Alerts
             if camera.showingNoStreamDataAlert {
                 noStreamDataView
             }
@@ -540,6 +549,10 @@ struct CameraView: View {
             
             if camera.showingHDOPOverLimit {
                 hdopOverLimitView
+            }
+            
+            if camera.showingPicSaveErrorAlert {
+                picSaveErrorView
             }
             
             
@@ -676,13 +689,13 @@ struct CameraView: View {
     }
     
     // MARK: Functions
-    private func savePic(upperUUID: String, textInPic: String, textNotes: String) {
+    func savePic(upperUUID: String, textInPic: String, textNotes: String) {
         
         let result = camera.checkUserData(textNotes: textNotes)
         
-        var long: String
-        var lat: String
-        var organismName: String
+//        var long: String
+//        var lat: String
+//        var organismName: String
         
         // if user data is all good, save pic
         if result.isValid {
@@ -693,69 +706,79 @@ struct CameraView: View {
             if settings[0].useBluetoothDevice {
                 Task.detached {
                     imageSuccessful = await camera.processImage(useBluetooth: settings[0].useBluetoothDevice, btStreamHasNoData: gps.nmea?.streamHasNoData ?? false, btEndEventHasNoData: gps.nmea?.endEventEncountered ?? false, hdopThreshold: settings[0].hdopThreshold, imgFile: image, tripOrRouteName: tripOrRouteName, uuid: upperUUID, gpsUsed: "ArrowGold", scannedText: textInPic, notes: result.textNotes)
+                    await postImageProcessing (imageSuccessful: imageSuccessful, upperUUID: upperUUID, textInPic: textInPic)
                 }
             } else {
                 Task.detached {
                     imageSuccessful = await camera.processImage(useBluetooth: settings[0].useBluetoothDevice, btStreamHasNoData: true, btEndEventHasNoData: true, hdopThreshold: settings[0].hdopThreshold, imgFile: image, tripOrRouteName: tripOrRouteName, uuid: upperUUID, gpsUsed: "iOS", scannedText: textInPic, notes: result.textNotes)
+                    await postImageProcessing (imageSuccessful: imageSuccessful, upperUUID: upperUUID, textInPic: textInPic)
                 }
-            }
-            
-            long = camera.snapshotLongitude
-            lat = camera.snapshotLatitude
-            organismName = textInPic
-            
-            // pop view back down
-            if imageSuccessful && mapMode != "none"{
-                map.showPopover = false
-            }
-            
-            // If image save and file write was successful, and map mode is Route, change annotation's color to blue:
-            if imageSuccessful && mapMode == "Traveling Salesman" {
-                Task {
-                    await map.updatePointColor(settings: settings, phpFile: "updateRoutePointColor.php",
-                                               postString:"_route_id=\(map.annotationItems[map.currentAnnoItem].routeID)&_point_order=\(map.annotationItems[map.currentAnnoItem].pointOrder)")
-                }
-            }
-            
-            // If image save and file write was successful, (and mapMode is "View Trip"?), add a temp point to the map
-            if imageSuccessful {
-                map.tempMapPoints.append(MapAnnotationItem(
-                    latitude: Double(lat) ?? 0,
-                    longitude: Double(long) ?? 0,
-                    routeID: "0",
-                    pointOrder: "0",
-                    organismName: organismName,
-                    systemName: "mappin",
-                    size: 20,
-                    highlightColor: Color (
-                        red: 1,
-                        green: 0.35,
-                        blue: 0
-                    )
-                ))
-            }
-            
-            // Clear displayed image
-            camera.image = UIImage()
-            // Clear scanned text
-            recognizedContent.items[0].text = ""
-            
-            // Clear custom data
-            camera.clearCustomData()
-            
-            // If image save was successful, Write scores to file, clear scores / measurements
-            if imageSuccessful {
-                // Put scores into JSON format, write to CSV
-                let scoresJSON = measurements.createScoreJSON()
-                Task.detached {
-                    await camera.saveScoreToTextFile(tripOrRouteName: tripOrRouteName, fileNameUUID: upperUUID, longitude: camera.snapshotLongitude, latitude: camera.snapshotLatitude, organismName: upperUUID, score: scoresJSON)
-                }
-                measurements.clearMeasurementVars()
             }
             
         } else {
             audio.playError()
             camera.showingInvalidSyntaxAlert = true
+        }
+    }
+    
+    // iOS 18 threading has changed? Try wrpping post-image save activities in an async
+    func postImageProcessing (imageSuccessful: Bool, upperUUID: String, textInPic: String) async {
+        var long: String
+        var lat: String
+        var organismName: String
+        
+        long = camera.snapshotLongitude
+        lat = camera.snapshotLatitude
+        organismName = textInPic
+        
+        // pop view back down
+        if imageSuccessful && mapMode != "none"{
+            map.showPopover = false
+        }
+        
+        // If image save and file write was successful, and map mode is Route, change annotation's color to blue:
+        if imageSuccessful && mapMode == "Traveling Salesman" {
+            Task {
+                await map.updatePointColor(settings: settings, phpFile: "updateRoutePointColor.php",
+                                           postString:"_route_id=\(map.annotationItems[map.currentAnnoItem].routeID)&_point_order=\(map.annotationItems[map.currentAnnoItem].pointOrder)")
+            }
+        }
+        
+        // If image save and file write was successful, (and mapMode is "View Trip"?), add a temp point to the map
+        if imageSuccessful {
+            map.tempMapPoints.append(MapAnnotationItem(
+                latitude: Double(lat) ?? 0,
+                longitude: Double(long) ?? 0,
+                routeID: "0",
+                pointOrder: "0",
+                organismName: organismName,
+                systemName: "mappin",
+                size: 20,
+                highlightColor: Color (
+                    red: 1,
+                    green: 0.35,
+                    blue: 0
+                )
+            ))
+        }
+        
+        // Clear displayed image
+        camera.image = UIImage()
+        
+        // Clear scanned text
+        recognizedContent.items[0].text = ""
+        
+        // Clear custom data
+        camera.clearCustomData()
+        
+        // If image save was successful, Write scores to file, clear scores / measurements
+        if imageSuccessful {
+            // Put scores into JSON format, write to CSV
+            let scoresJSON = measurements.createScoreJSON()
+            Task.detached {
+                await camera.saveScoreToTextFile(tripOrRouteName: tripOrRouteName, fileNameUUID: upperUUID, longitude: camera.snapshotLongitude, latitude: camera.snapshotLatitude, organismName: upperUUID, score: scoresJSON)
+                await measurements.clearMeasurementVars()
+            }
         }
     }
     

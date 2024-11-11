@@ -14,6 +14,7 @@ import SwiftUI
     var image = UIImage()
     var showingNoStreamDataAlert = false
     var showingInvalidSyntaxAlert = false
+    var showingPicSaveErrorAlert = false
     var showingHDOPOverLimit = false
     var textNotes = ""
     private var numofmatches = 0
@@ -123,8 +124,6 @@ import SwiftUI
                             hdop: hdop, longitude: longitude, latitude: latitude, altitude: altitude,
                             scannedText: scannedText, notes: textNotes)
             
-            setVarsAndViewAfterSuccessfulSave()
-            
         } else {
             audio.playError()
             // Display hdop over threshold message
@@ -138,26 +137,35 @@ import SwiftUI
         
         do {
             // Save image to Trip's folder
-            try _ = FieldWorkImageFile.saveToFolder(imgFile: imgFile, tripOrRouteName: tripOrRouteName, fileNameUUID: uuid)
+            let saveSuccess = try FieldWorkImageFile.saveToFolder(imgFile: imgFile, tripOrRouteName: tripOrRouteName, fileNameUUID: uuid)
+            if !saveSuccess {
+                // Alert user of image save error
+                showingPicSaveErrorAlert = true
+            } else {
+                showingPicSaveErrorAlert = false
+                setVarsAndViewAfterSuccessfulSave()
+                
+                // If pic save OK, write the pic's info to a .txt file
+                await createImageCsvFileForTheDay(tripOrRouteName: tripOrRouteName)
+                
+                do {
+                    // .txt file header order is uuid, gps, hdop, longitude, latitude, altitude.
+                    try _ = FieldWorkGPSFile.writePicDataToCsvFile(tripOrRouteName: tripOrRouteName, fileNameUUID: uuid, gpsUsed: gpsUsed, hdop: hdop, longitude: longitude, latitude: latitude, altitude: altitude, scannedText: scannedText, notes: notes)
+                    // Play a success noise
+                    audio.playSuccess()
+                } catch {
+                    // failed to write file – bad permissions, bad filename, missing permissions, or more likely it can't be converted to the encoding
+                    print(error.localizedDescription)
+                    audio.playError()
+                }
+            }
         } catch {
+            showingPicSaveErrorAlert = true
             print(error.localizedDescription)
             audio.playError()
         }
         
-        await createImageCsvFileForTheDay(tripOrRouteName: tripOrRouteName)
-        
-        
-        // Write the pic's info to a .txt file
-        do {
-            // .txt file header order is uuid, gps, hdop, longitude, latitude, altitude.
-            try _ = FieldWorkGPSFile.writePicDataToCsvFile(tripOrRouteName: tripOrRouteName, fileNameUUID: uuid, gpsUsed: gpsUsed, hdop: hdop, longitude: longitude, latitude: latitude, altitude: altitude, scannedText: scannedText, notes: notes)
-            // Play a success noise
-            audio.playSuccess()
-        } catch {
-            // failed to write file – bad permissions, bad filename, missing permissions, or more likely it can't be converted to the encoding
-            print(error.localizedDescription)
-            audio.playError()
-        }
+
     }
     
     func setVarsAndViewAfterSuccessfulSave() {

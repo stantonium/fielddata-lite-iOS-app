@@ -69,13 +69,22 @@ class FieldWorkImageFile {
         let fileName = "\(fileNameUUID).heic"
         let path = imageDir.appendingPathComponent("\(DeviceUUID().deviceUUID)/trips/\(tripOrRouteName)/images")
         filePath = ProcessTextfile.createPath(path: path, fileName: fileName)
-    
-            do {
-                if let imageData = imgFile.jpegData(compressionQuality: 1) {
-                    try imageData.write(to: filePath)
-                }
-            } catch {print (error)}
-        return true
+        
+        do {
+//            if let imageData = imgFile.jpegData(compressionQuality: 1) {
+            if let imageData = imgFile.heicData() { // try heicData instead of jpegData. Will image size be smaller?
+                print("Writing imageData to filePath...")
+                try imageData.write(to: filePath)
+                return true
+            }
+            else {
+                print("imageData = imgFile.heicData() ERROR!")
+            }
+        } catch {
+            print (error)
+        }
+        
+        return false
     }
 }
 
