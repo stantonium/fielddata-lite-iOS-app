@@ -760,6 +760,16 @@ struct CameraView: View {
                     blue: 0
                 )
             ))
+            
+            // Any scores?
+            if measurements.scoresToSave != measurements.emptyScoreCheck {
+                // Put scores into JSON format, write to CSV
+                let scoresJSON = measurements.createScoreJSON()
+                Task.detached {
+                    await camera.saveScoreToTextFile(tripOrRouteName: tripOrRouteName, fileNameUUID: upperUUID, longitude: camera.snapshotLongitude, latitude: camera.snapshotLatitude, organismName: upperUUID, score: scoresJSON)
+                }
+            }
+            measurements.clearMeasurementVars()
         }
         
         // Clear displayed image
@@ -773,12 +783,15 @@ struct CameraView: View {
         
         // If image save was successful, Write scores to file, clear scores / measurements
         if imageSuccessful {
-            // Put scores into JSON format, write to CSV
-            let scoresJSON = measurements.createScoreJSON()
-            Task.detached {
-                await camera.saveScoreToTextFile(tripOrRouteName: tripOrRouteName, fileNameUUID: upperUUID, longitude: camera.snapshotLongitude, latitude: camera.snapshotLatitude, organismName: upperUUID, score: scoresJSON)
-                await measurements.clearMeasurementVars()
-            }
+//            // Any scores?
+//            if measurements.scoresToSave != measurements.emptyScoreCheck {
+//                // Put scores into JSON format, write to CSV
+//                let scoresJSON = measurements.createScoreJSON()
+//                Task.detached {
+//                    await camera.saveScoreToTextFile(tripOrRouteName: tripOrRouteName, fileNameUUID: upperUUID, longitude: camera.snapshotLongitude, latitude: camera.snapshotLatitude, organismName: upperUUID, score: scoresJSON)
+//                }
+//            }
+//            measurements.clearMeasurementVars()
         }
     }
     
