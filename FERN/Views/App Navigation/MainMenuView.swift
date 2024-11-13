@@ -83,6 +83,16 @@ struct MainMenuView: View {
                                 Text("Routes")
                             }
                         }
+                        // Classify Saved Images
+                        NavigationLink {
+                            CIMainView()
+                                .navigationTitle("Identify Image Objects")
+                        } label: {
+                            HStack {
+                                Image(systemName: "text.below.photo").bold(false).foregroundColor(.gray)
+                                Text("Identify Image Objects")
+                            }
+                        }
                         // App settings
                         NavigationLink {
                             SettingsView(camera: camera)
@@ -103,20 +113,20 @@ struct MainMenuView: View {
 //                                Text("Post-trip Image OCR")
 //                            }
 //                        }
-//                        // Testing
+//                        // Scoring View Testing
 //                        NavigationLink {
 //                            ScoringView()
-//                                .navigationTitle("Testing")
+//                                .navigationTitle("ScoringView Testing")
 //                        } label: {
 //                            HStack {
 //                                Image(systemName: "testtube.2").bold(false).foregroundColor(.gray)
 //                                Text("Testing")
 //                            }
 //                        }
-//                        // Testing
+//                        // Console Text View for Testing
 //                        NavigationLink {
 //                            ConsoleTextView(gps: gps)
-//                                .navigationTitle("Testing")
+//                                .navigationTitle("ConsoleTextView Testing")
 //                        } label: {
 //                            HStack {
 //                                Image(systemName: "text.alignleft").bold(false).foregroundColor(.gray)

@@ -8,6 +8,7 @@
 
 import SwiftUI
 import SwiftData
+import Vision
 
 struct CameraView: View {
     
@@ -45,6 +46,8 @@ struct CameraView: View {
     @State private var showMeasurementSelect = false
     //    @ObservedObject var measurements = Measurements()
     
+    // Objects in image
+    @State private var observations: [String: Float] = [:]
     
     // Sounds
     let audio = playSound()
@@ -228,10 +231,11 @@ struct CameraView: View {
         }.buttonStyle(.borderedProminent).tint(.blue)
     }
     
-    // Scan for text button
-    var scanForTextButton: some View {
+    // Scan image
+    var scanButton: some View {
         Button(action: {
             
+            // SCAN FOR TEXT
             isRecognizing = true
             
             // Put image in array
@@ -244,6 +248,26 @@ struct CameraView: View {
                 // Text recognition is finished, hide the progress indicator.
                 isRecognizing = false
             }.recognizeText()
+            
+            // SCAN FOR OBJECTS
+//            Task {
+//                if let imageData = camera.image.heicData() {
+//
+//                    // Clear list
+//                    observations = [:]
+//                    
+//                    let request = ClassifyImageRequest()
+//                    
+//                    let results = try await request.perform(on: imageData, orientation: .up)
+//                    // Use `hasMinimumPrecision` for a high-recall filter. Provides a much broader range of observations, but can result in more false positive results.
+//                        .filter { $0.hasMinimumPrecision(0.1, forRecall: 0.8) }
+//                    // Use `hasMinimumRecall` for a high-precision filter. Retains a smaller number of observations, but less chance to contain false positives.
+//                    // .filter { $0.hasMinimumRecall(0.01, forPrecision: 0.9) }
+//                    for classification in results {
+//                        observations[classification.identifier] = classification.confidence
+//                    }
+//                }
+//            }
         }, label: {
             HStack {
                 Image(systemName: "text.viewfinder").font(.system(size: 20))
@@ -261,6 +285,7 @@ struct CameraView: View {
     var cancelPicButton: some View {
         Button(action: {
             camera.cancelPic()
+            observations = [:]
         },
                label: {HStack {
             Image(systemName: "arrow.triangle.2.circlepath.camera").font(.system(size: 15))
@@ -490,6 +515,75 @@ struct CameraView: View {
         }
     }
     
+//    // Long press for object scanning
+//    var longPress: some Gesture {
+//        LongPressGesture(minimumDuration: 3)
+//            .onEnded { finished in
+////                self.completedLongPress = finished
+//                Task {
+//                    if let imageData = camera.image.heicData() {
+//                        
+//                        // Clear list
+//                        observations = [:]
+//                        
+//                        let request = ClassifyImageRequest()
+//                        
+//                        let results = try await request.perform(on: imageData, orientation: .up)
+//                        // Use `hasMinimumPrecision` for a high-recall filter. Provides a much broader range of observations, but can result in more false positive results.
+//                            .filter { $0.hasMinimumPrecision(0.1, forRecall: 0.8) }
+//                        // Use `hasMinimumRecall` for a high-precision filter. Retains a smaller number of observations, but less chance to contain false positives.
+//                        // .filter { $0.hasMinimumRecall(0.01, forPrecision: 0.9) }
+//                        for classification in results {
+//                            observations[classification.identifier] = classification.confidence
+//                        }
+//                    }
+//                }
+//            }
+//    }
+//
+    
+    // Show image and scanned object list
+    var imageDisplayView: some View {
+        HStack {
+            if observations != [:] {
+                List {
+                    ForEach(observations.sorted(by: { $0.value > $1.value }), id: \.key) { key, value in
+                        Text("\(value, specifier: "%.2f"): \(key.capitalized)")
+                            .font(.system(size: 15))
+                        //                        .padding(10)
+                    }
+                }
+            }
+            
+            // Show the pic to be saved
+            Image(uiImage: camera.image)
+                .resizable()
+//                    .scaledToFit()
+                .aspectRatio(contentMode: .fit)
+//                .opacity(0.75)
+//                .gesture(longPress)
+                .onTapGesture {
+                    Task {
+                        if let imageData = camera.image.heicData() {
+
+                            // Clear list
+                            observations = [:]
+                            
+                            let request = ClassifyImageRequest()
+                            
+                            let results = try await request.perform(on: imageData, orientation: .up)
+                            // Use `hasMinimumPrecision` for a high-recall filter. Provides a much broader range of observations, but can result in more false positive results.
+                                .filter { $0.hasMinimumPrecision(0.1, forRecall: 0.8) }
+                            // Use `hasMinimumRecall` for a high-precision filter. Retains a smaller number of observations, but less chance to contain false positives.
+                            // .filter { $0.hasMinimumRecall(0.01, forPrecision: 0.9) }
+                            for classification in results {
+                                observations[classification.identifier] = classification.confidence
+                            }
+                        }
+                    }
+                }
+        }
+    }
     
     // MARK: Main View
     var body: some View {
@@ -555,11 +649,7 @@ struct CameraView: View {
                 picSaveErrorView
             }
             
-            
-            // Show the pic to be saved
-            Image(uiImage: camera.image)
-                .resizable()
-                .scaledToFit()
+            imageDisplayView
             
             // Custom notes
             if !showScoreTextField {
@@ -621,7 +711,7 @@ struct CameraView: View {
                 // Show the image save button if ImagePicker struct has an image.
                 if camera.isImageSelected {
                     if !showScoreTextField {
-                        scanForTextButton.transition(.scale.combined(with: .opacity))
+                        scanButton.transition(.scale.combined(with: .opacity))
                     } else {
                         previousItem.transition(.scale.combined(with: .opacity))
                     }
@@ -774,6 +864,8 @@ struct CameraView: View {
         
         // Clear displayed image
         camera.image = UIImage()
+        // Clear list
+        observations = [:]
         
         // Clear scanned text
         recognizedContent.items[0].text = ""

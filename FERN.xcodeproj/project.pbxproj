@@ -66,6 +66,10 @@
 		D183BB482CB84D5B00C124A1 /* RoutingCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = D183BB472CB84D5B00C124A1 /* RoutingCache.swift */; };
 		D183BB4A2CB9AC9D00C124A1 /* MenuListClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D183BB492CB9AC9D00C124A1 /* MenuListClass.swift */; };
 		D18B59D32C07C16B005A58DB /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D18B59D22C07C16B005A58DB /* MessageView.swift */; };
+		D18CCA5E2CE51B6100DD4437 /* CIDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D18CCA5D2CE51B5900DD4437 /* CIDataSource.swift */; };
+		D18CCA602CE51BCE00DD4437 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = D18CCA5F2CE51BC400DD4437 /* LICENSE */; };
+		D18CCA622CE51CFF00DD4437 /* CIMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D18CCA612CE51CF800DD4437 /* CIMainView.swift */; };
+		D18CCA642CE51D7800DD4437 /* CIResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D18CCA632CE51D6E00DD4437 /* CIResultsView.swift */; };
 		D19FF3712C17542F00B54B7E /* SettingsHdopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19FF3702C17542F00B54B7E /* SettingsHdopView.swift */; };
 		D1A56E812B051DB300AC8291 /* SelectTripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A56E802B051DB300AC8291 /* SelectTripView.swift */; };
 		D1E260D42C64087300C9CFF7 /* LocalFileProcessing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E260D32C64087300C9CFF7 /* LocalFileProcessing.swift */; };
@@ -157,6 +161,10 @@
 		D183BB472CB84D5B00C124A1 /* RoutingCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutingCache.swift; sourceTree = "<group>"; };
 		D183BB492CB9AC9D00C124A1 /* MenuListClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuListClass.swift; sourceTree = "<group>"; };
 		D18B59D22C07C16B005A58DB /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
+		D18CCA5D2CE51B5900DD4437 /* CIDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIDataSource.swift; sourceTree = "<group>"; };
+		D18CCA5F2CE51BC400DD4437 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		D18CCA612CE51CF800DD4437 /* CIMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIMainView.swift; sourceTree = "<group>"; };
+		D18CCA632CE51D6E00DD4437 /* CIResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIResultsView.swift; sourceTree = "<group>"; };
 		D19FF3702C17542F00B54B7E /* SettingsHdopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsHdopView.swift; sourceTree = "<group>"; };
 		D1A56E802B051DB300AC8291 /* SelectTripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTripView.swift; sourceTree = "<group>"; };
 		D1E260D32C64087300C9CFF7 /* LocalFileProcessing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileProcessing.swift; sourceTree = "<group>"; };
@@ -375,6 +383,7 @@
 				D16FA6112C1CB7A50090E756 /* MenuListModel.swift */,
 				D1036C0E2C1B519E00E2E266 /* StartScreenModel.swift */,
 				D183BB3E2CB8454100C124A1 /* Alerts */,
+				D18CCA4C2CE5196700DD4437 /* ClassifyImage */,
 				D16FA64A2C25E4890090E756 /* GPS */,
 				D16FA64C2C25E5210090E756 /* Images */,
 				D183BB3C2CB844C900C124A1 /* LocalMetadata */,
@@ -457,11 +466,30 @@
 			path = "App Navigation";
 			sourceTree = "<group>";
 		};
+		D18CCA4C2CE5196700DD4437 /* ClassifyImage */ = {
+			isa = PBXGroup;
+			children = (
+				D18CCA5D2CE51B5900DD4437 /* CIDataSource.swift */,
+				D18CCA5F2CE51BC400DD4437 /* LICENSE */,
+			);
+			path = ClassifyImage;
+			sourceTree = "<group>";
+		};
+		D18CCA652CE54F9900DD4437 /* ClassifyImage */ = {
+			isa = PBXGroup;
+			children = (
+				D18CCA612CE51CF800DD4437 /* CIMainView.swift */,
+				D18CCA632CE51D6E00DD4437 /* CIResultsView.swift */,
+			);
+			path = ClassifyImage;
+			sourceTree = "<group>";
+		};
 		D1A56E942B07D05E00AC8291 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				D16A6C7B2995D18100835B5E /* StartScreenView.swift */,
 				D16FA6392C25DABF0090E756 /* Camera */,
+				D18CCA652CE54F9900DD4437 /* ClassifyImage */,
 				D16FA6172C2082C20090E756 /* Maps */,
 				D18B59D42C07C3A6005A58DB /* App Navigation */,
 				D18B59C92C078849005A58DB /* Capstone Views */,
@@ -573,6 +601,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D18CCA602CE51BCE00DD4437 /* LICENSE in Resources */,
 				D10BB323298ADAA500667E86 /* Preview Assets.xcassets in Resources */,
 				D10BB320298ADAA500667E86 /* Assets.xcassets in Resources */,
 			);
@@ -599,6 +628,7 @@
 				D183BB302CA311AD00C124A1 /* SettingsOfflineModeView.swift in Sources */,
 				D1E260D42C64087300C9CFF7 /* LocalFileProcessing.swift in Sources */,
 				D1766C9D298DB978002F594D /* MainMenuView.swift in Sources */,
+				D18CCA642CE51D7800DD4437 /* CIResultsView.swift in Sources */,
 				D16FA6432C25E23F0090E756 /* ImagePickerStruct.swift in Sources */,
 				D127B3802A12EDF600F6287A /* NMEADataView.swift in Sources */,
 				D130BADA2B5ADEAE00F0C47C /* Trip.swift in Sources */,
@@ -608,6 +638,7 @@
 				D18B59D32C07C16B005A58DB /* MessageView.swift in Sources */,
 				D16B38DB2CBF197100AD32C0 /* TripCompleteView.swift in Sources */,
 				D16796432BE02CFF00561875 /* SelectTripForCesiumView.swift in Sources */,
+				D18CCA622CE51CFF00DD4437 /* CIMainView.swift in Sources */,
 				D16A6C7229901A2000835B5E /* SelectAreaView.swift in Sources */,
 				D11B2D902BF3BC81004FEE0B /* ScanPhotosInFolderForText.swift in Sources */,
 				D1036C0F2C1B519E00E2E266 /* StartScreenModel.swift in Sources */,
@@ -636,6 +667,7 @@
 				D16FA63B2C25DC0B0090E756 /* TextRecognitionStruct.swift in Sources */,
 				D183BB372CB47FD700C124A1 /* LoggerStruct.swift in Sources */,
 				D19FF3712C17542F00B54B7E /* SettingsHdopView.swift in Sources */,
+				D18CCA5E2CE51B6100DD4437 /* CIDataSource.swift in Sources */,
 				D167963B2BD9B78A00561875 /* SettingsCesiumView.swift in Sources */,
 				D1A56E812B051DB300AC8291 /* SelectTripView.swift in Sources */,
 				D183BB4A2CB9AC9D00C124A1 /* MenuListClass.swift in Sources */,
@@ -812,12 +844,12 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.1;
+				MARKETING_VERSION = 1.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "ORNL.FERN-UT-Battelle";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -851,12 +883,12 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.1;
+				MARKETING_VERSION = 1.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "ORNL.FERN-UT-Battelle";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
