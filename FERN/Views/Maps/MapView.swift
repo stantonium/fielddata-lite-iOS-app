@@ -193,13 +193,16 @@ struct MapView: View {
                         measurements.setMeasurementVars()
                         showScoreTextField = true
                     } else {
-                        // Write current measurement to vars
-                        measurements.assignCurrentScoreForSave()
-                        
-                        // Put scores into JSON format, write to CSV
-                        let scoresJSON = measurements.createScoreJSON()
-                        Task.detached {
-                            await map.saveScoreToTextFile(tripOrRouteName: tripOrRouteName, longitude: "\(map.annotationItems[map.currentAnnoItem].longitude)", latitude: "\(map.annotationItems[map.currentAnnoItem].latitude)", score: scoresJSON)
+                        // Any scores?
+                        if measurements.scoresToSave != measurements.emptyScoreCheck {
+                            // Write current measurement to vars
+                            measurements.assignCurrentScoreForSave()
+                            
+                            // Put scores into JSON format, write to CSV
+                            let scoresJSON = measurements.createScoreJSON()
+                            Task.detached {
+                                await map.saveScoreToTextFile(tripOrRouteName: tripOrRouteName, longitude: "\(map.annotationItems[map.currentAnnoItem].longitude)", latitude: "\(map.annotationItems[map.currentAnnoItem].latitude)", score: scoresJSON)
+                            }
                         }
                         // Hide
                         showScoreTextField = false
