@@ -456,6 +456,36 @@ struct CameraView: View {
         .navigationTitle("Select unit of measurement")
     }
     
+    // Text value button
+    struct textValueButton: View {
+        var labelAndValue: String
+        var width: CGFloat
+        var height: CGFloat
+        @Binding var score: String
+        
+        var body: some View {
+            Button(action: {
+                if score.isEmpty {
+                    score.append(labelAndValue)
+                } else {
+                    score.removeAll()
+                    score.append(labelAndValue)
+                }
+            }, label: {
+                Text(labelAndValue).font(.system(size:40))
+            })
+            .frame(width: width, height: height)
+            .background(Color(red: 0.5, green: 0.5, blue: 0.5))
+            .foregroundStyle(Color.white)
+            .clipShape(RoundedRectangle(cornerRadius: 10.0))
+            .overlay(
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(Color(red: 0.5, green: 0.5, blue: 0.5), lineWidth: 2))
+            // Bottom padding
+            .padding(.bottom, 20)
+        }
+    }
+    
     // Measurements/scoring displayed values
     var measurementsView: some View {
         HStack {
@@ -464,14 +494,17 @@ struct CameraView: View {
             Button {
                 showMeasurementSelect.toggle()
             } label: {
-                HStack {
-                    Text("\(measurements.selectedUnit)")
-                    Image(systemName: "arrow.up.and.down").bold(false).foregroundColor(.white)
+                // Show units if score type is a numerical value
+                if measurements.currMeasureLabel > 0 {
+                    HStack {
+                        Text("\(measurements.selectedUnit)")
+                        Image(systemName: "arrow.up.and.down").bold(false).foregroundColor(.white)
+                    }
+                    .frame(minWidth: 20, maxWidth: 60, minHeight: 20, maxHeight: 23)
+                    .background(Color.gray)
+                    .foregroundColor(.white)
+                    .padding(.horizontal)
                 }
-                .frame(minWidth: 20, maxWidth: 60, minHeight: 20, maxHeight: 23)
-                .background(Color.gray)
-                .foregroundColor(.white)
-                .padding(.horizontal)
             }.popover(isPresented: $showMeasurementSelect) { unitTypePicker }
         }
     }
@@ -507,11 +540,23 @@ struct CameraView: View {
         }
     }
     
+    // Alive / Dead layout
+    var bonesMcCoy: some View {
+        HStack {
+            textValueButton(labelAndValue: "Alive", width: 150, height: 50, score: $measurements.score)
+            textValueButton(labelAndValue: "Dead", width: 150, height: 50, score: $measurements.score)
+        }
+    }
+    
     // Combine the two to workaround that pesky return
     var measurementsAndNumberpad: some View {
         VStack {
             measurementsView
-            numberpad
+            if measurements.currMeasureLabel == 0 {
+                bonesMcCoy
+            } else {
+                numberpad
+            }
         }
     }
     

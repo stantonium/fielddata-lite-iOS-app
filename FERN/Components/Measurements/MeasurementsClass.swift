@@ -14,13 +14,13 @@ import Foundation
     var selectedUnit = "cm"
     var currMeasureLabel = 0
     
-    /* When adding another measurement type, REMEMBER TO ADD AN ITEM TO MEASUREMENT, SCORESTOSAVE, UNITSTOSAVE, AND EMPTYSCORECHECK ARRAYS.
+    /* When adding another measurement type, REMEMBER TO ADD AN ITEM TO MEASUREMENT, SCORESTOSAVE, UNITSTOSAVE, AND EMPTYSCORECHECK ARRAYS. Don't forget clearMeasurementVars() function.
      Also, values will be merged into JSON format and saved to a CSV, so avoid problematic
      characters! */
-    let measurementLables = ["DBH", "Height"]
-    var scoresToSave = ["", ""]
-    var unitsToSave = ["cm", "cm"]
-    var emptyScoreCheck = ["", ""]
+    let measurementLables = ["Vital Status", "DBH", "Height"]
+    var scoresToSave = ["", "", ""]
+    var unitsToSave = ["", "cm", "cm"]
+    var emptyScoreCheck = ["", "", ""]
     
     
     // For picker wheel:
@@ -92,7 +92,7 @@ import Foundation
     func clearMeasurementVars() {
         score = ""
         scoreType = "No type"
-        scoresToSave = ["", ""]
+        scoresToSave = ["", "", ""]
         currMeasureLabel = 0
     }
     
