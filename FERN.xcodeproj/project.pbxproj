@@ -72,6 +72,8 @@
 		D18CCA642CE51D7800DD4437 /* CIResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D18CCA632CE51D6E00DD4437 /* CIResultsView.swift */; };
 		D19FF3712C17542F00B54B7E /* SettingsHdopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19FF3702C17542F00B54B7E /* SettingsHdopView.swift */; };
 		D1A56E812B051DB300AC8291 /* SelectTripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A56E802B051DB300AC8291 /* SelectTripView.swift */; };
+		D1BFBD482D245FE500107E41 /* Expedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BFBD472D245FE500107E41 /* Expedition.swift */; };
+		D1BFBD4B2D2461A900107E41 /* enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BFBD4A2D24619E00107E41 /* enums.swift */; };
 		D1E260D42C64087300C9CFF7 /* LocalFileProcessing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E260D32C64087300C9CFF7 /* LocalFileProcessing.swift */; };
 /* End PBXBuildFile section */
 
@@ -167,6 +169,8 @@
 		D18CCA632CE51D6E00DD4437 /* CIResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIResultsView.swift; sourceTree = "<group>"; };
 		D19FF3702C17542F00B54B7E /* SettingsHdopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsHdopView.swift; sourceTree = "<group>"; };
 		D1A56E802B051DB300AC8291 /* SelectTripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTripView.swift; sourceTree = "<group>"; };
+		D1BFBD472D245FE500107E41 /* Expedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expedition.swift; sourceTree = "<group>"; };
+		D1BFBD4A2D24619E00107E41 /* enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = enums.swift; sourceTree = "<group>"; };
 		D1E260D32C64087300C9CFF7 /* LocalFileProcessing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileProcessing.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -384,6 +388,7 @@
 				D1036C0E2C1B519E00E2E266 /* StartScreenModel.swift */,
 				D183BB3E2CB8454100C124A1 /* Alerts */,
 				D18CCA4C2CE5196700DD4437 /* ClassifyImage */,
+				D1BFBD492D24617900107E41 /* Enums */,
 				D16FA64A2C25E4890090E756 /* GPS */,
 				D16FA64C2C25E5210090E756 /* Images */,
 				D183BB3C2CB844C900C124A1 /* LocalMetadata */,
@@ -515,8 +520,17 @@
 			children = (
 				D107EF172B5716F60020F0A2 /* Settings.swift */,
 				D130BAD92B5ADEAE00F0C47C /* Trip.swift */,
+				D1BFBD472D245FE500107E41 /* Expedition.swift */,
 			);
 			path = Persistence;
+			sourceTree = "<group>";
+		};
+		D1BFBD492D24617900107E41 /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				D1BFBD4A2D24619E00107E41 /* enums.swift */,
+			);
+			path = Enums;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -623,9 +637,11 @@
 			files = (
 				D15BFD182BBF55590013B67F /* TextPreviewView.swift in Sources */,
 				D107EF1D2B571CAA0020F0A2 /* SettingsUploadView.swift in Sources */,
+				D1BFBD4B2D2461A900107E41 /* enums.swift in Sources */,
 				D16FA6512C29D9040090E756 /* SelectMapPlatformView.swift in Sources */,
 				D1766CA1298DB9C6002F594D /* MapView.swift in Sources */,
 				D183BB302CA311AD00C124A1 /* SettingsOfflineModeView.swift in Sources */,
+				D1BFBD482D245FE500107E41 /* Expedition.swift in Sources */,
 				D1E260D42C64087300C9CFF7 /* LocalFileProcessing.swift in Sources */,
 				D1766C9D298DB978002F594D /* MainMenuView.swift in Sources */,
 				D18CCA642CE51D7800DD4437 /* CIResultsView.swift in Sources */,
@@ -849,7 +865,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.1;
+				MARKETING_VERSION = 1.6.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "ORNL.FERN-UT-Battelle";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -888,7 +904,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.1;
+				MARKETING_VERSION = 1.6.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "ORNL.FERN-UT-Battelle";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

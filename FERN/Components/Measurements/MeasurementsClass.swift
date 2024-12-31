@@ -29,9 +29,17 @@ import Foundation
     // Create JSON string from measurementLables, scoresToSave, and unitsToSave
     func createScoreJSON() -> String {
         var scoresJSON = "{"
-                        
+         
         for (i, element) in measurementLables.enumerated() {
-            scoresJSON.append("\"\(element)\": {\"Score\": \"\(scoresToSave[i])\"; \"Unit\": \"\(unitsToSave[i])\"}; ")
+            // If no score, don't append
+            if scoresToSave[i] != "" {
+                scoresJSON.append("\"\(element)\": {\"Score\": \"\(scoresToSave[i])\"")
+                // If no unit, don't append
+                if unitsToSave[i] != "" {
+                    scoresJSON.append("; \"Unit\": \"\(unitsToSave[i])\"")
+                }
+                scoresJSON.append("}; ")
+            }
         }
         // Axe trailing , and space
         scoresJSON.removeLast()
