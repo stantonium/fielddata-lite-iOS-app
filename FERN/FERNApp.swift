@@ -19,7 +19,7 @@ struct FERNApp: App {
 //
 //    init() {
 //        do {
-//            container = try ModelContainer(for: Settings.self, SDTrip.self //,migrationPlan: SettingsMigrationPlan.self  APR-2024: SwiftData may still be too immature. OCT-2024: Apparently auto-migration was a thing whose documentation had little web saturation per anything foundational with Apple, or it was added to iOS MAY 2024.
+//            container = try ModelContainer(for: Settings.self, SDTrip.self //,migrationPlan: SettingsMigrationPlan.self  APR-2024: SwiftData may still be too immature. OCT-2024: Apparently auto-migration was a thing whose documentation had little web saturation (per anything foundational-information with Apple), or it was added to iOS MAY 2024.
 //            )
 //        } catch {
 //                fatalError("Failed to configure SwiftData container.")

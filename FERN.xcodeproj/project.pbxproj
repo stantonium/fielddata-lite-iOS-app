@@ -74,6 +74,8 @@
 		D1A56E812B051DB300AC8291 /* SelectTripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A56E802B051DB300AC8291 /* SelectTripView.swift */; };
 		D1BFBD482D245FE500107E41 /* Expedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BFBD472D245FE500107E41 /* Expedition.swift */; };
 		D1BFBD4B2D2461A900107E41 /* enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BFBD4A2D24619E00107E41 /* enums.swift */; };
+		D1BFBD4D2D26EA6500107E41 /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BFBD4C2D26EA6500107E41 /* Point.swift */; };
+		D1BFBD4F2D26EF6D00107E41 /* ExpeditionSDTestingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BFBD4E2D26EF6D00107E41 /* ExpeditionSDTestingView.swift */; };
 		D1E260D42C64087300C9CFF7 /* LocalFileProcessing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E260D32C64087300C9CFF7 /* LocalFileProcessing.swift */; };
 /* End PBXBuildFile section */
 
@@ -171,6 +173,8 @@
 		D1A56E802B051DB300AC8291 /* SelectTripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTripView.swift; sourceTree = "<group>"; };
 		D1BFBD472D245FE500107E41 /* Expedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expedition.swift; sourceTree = "<group>"; };
 		D1BFBD4A2D24619E00107E41 /* enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = enums.swift; sourceTree = "<group>"; };
+		D1BFBD4C2D26EA6500107E41 /* Point.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
+		D1BFBD4E2D26EF6D00107E41 /* ExpeditionSDTestingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpeditionSDTestingView.swift; sourceTree = "<group>"; };
 		D1E260D32C64087300C9CFF7 /* LocalFileProcessing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileProcessing.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -296,6 +300,7 @@
 				D167963E2BDAEF2200561875 /* RandoTestingView.swift */,
 				D162E6EB2C59495500E419A5 /* SelectTripForTestingView.swift */,
 				D183BB332CB08A3D00C124A1 /* ConsoleTextView.swift */,
+				D1BFBD4E2D26EF6D00107E41 /* ExpeditionSDTestingView.swift */,
 			);
 			path = Testing;
 			sourceTree = "<group>";
@@ -521,6 +526,7 @@
 				D107EF172B5716F60020F0A2 /* Settings.swift */,
 				D130BAD92B5ADEAE00F0C47C /* Trip.swift */,
 				D1BFBD472D245FE500107E41 /* Expedition.swift */,
+				D1BFBD4C2D26EA6500107E41 /* Point.swift */,
 			);
 			path = Persistence;
 			sourceTree = "<group>";
@@ -667,6 +673,8 @@
 				D16FA6472C25E3920090E756 /* CoreLocationClass.swift in Sources */,
 				D16FA6122C1CB7A50090E756 /* MenuListModel.swift in Sources */,
 				D107EF182B5716F60020F0A2 /* Settings.swift in Sources */,
+				D1BFBD4D2D26EA6500107E41 /* Point.swift in Sources */,
+				D1BFBD4F2D26EF6D00107E41 /* ExpeditionSDTestingView.swift in Sources */,
 				D1766C9F298DB9B2002F594D /* SearchByNameView.swift in Sources */,
 				D15BFD142BBF55000013B67F /* OCRModel.swift in Sources */,
 				D1036C0C2C1B4FD500E2E266 /* StartScreenController.swift in Sources */,

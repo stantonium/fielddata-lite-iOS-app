@@ -113,6 +113,16 @@ struct MainMenuView: View {
 //                                Text("Post-trip Image OCR")
 //                            }
 //                        }
+//                        // Add a trip-type expedition test view
+//                        NavigationLink {
+//                            ExpeditionSDTestingView()
+//                                .navigationTitle("Exp SD Testing")
+//                        } label: {
+//                            HStack {
+//                                Image(systemName: "testtube.2").bold(false).foregroundColor(.gray)
+//                                Text("Exp SD Testing")
+//                            }
+//                        }
 //                        // Scoring View Testing
 //                        NavigationLink {
 //                            ScoringView()
